@@ -2893,7 +2893,11 @@ async function loadData() {
   } catch(e) {
     console.log('Offline — using local data');
   }
-//
+  // รีเซ็ต viewYear/viewMonth เป็นเดือนปัจจุบันเสมอตอนโหลดหน้า
+  const _now = new Date();
+  data.viewYear = _now.getFullYear();
+  data.viewMonth = _now.getMonth() + 1;
+
   if(!data.plans)data.plans=[];
   if(!data.debts)data.debts=[];
   if(!data.lenders)data.lenders=[];
@@ -5506,10 +5510,6 @@ function initFirebase(){
     _initLocalMode();
     return;
   }
-
-  // ── ใช้ GAS sync แทน Firebase login — ไม่ต้อง login Gmail ──
-  _initLocalMode();
-  return;
 
   firebase.initializeApp(FIREBASE_CONFIG);
   db=firebase.firestore();
